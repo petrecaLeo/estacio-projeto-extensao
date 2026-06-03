@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Guia de Segurança Digital para o Dia a Dia</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+<style>
+  :root {
+    /* Brand palette */
+    --navy-900: #060f24;
+    --navy-800: #0a1733;
+    --navy-700: #112144;
+    --navy-600: #1a2f5c;
+    --blue-500: #2b6bff;   /* electric blue */
+    --blue-400: #4f86ff;
+    --blue-100: #e7efff;
+    --white: #ffffff;
+    --paper: #f6f8fc;
+    --ink: #0e1a30;
+    --ink-soft: #46546e;
+    --ink-faint: #7b88a0;
+    --line: #e4e9f2;
+
+    /* Semantic */
+    --safe: #15a05a;        /* green - dica/seguro */
+    --safe-bg: #e6f6ee;
+    --safe-line: #bce6cf;
+    --danger: #e23b3b;      /* red - perigo */
+    --danger-bg: #fdeaea;
+    --danger-line: #f6c9c9;
+
+    --radius: 18px;
+    --radius-sm: 12px;
+    --shadow-sm: 0 1px 2px rgba(8,18,36,.06), 0 4px 14px rgba(8,18,36,.05);
+    --shadow-md: 0 10px 30px rgba(8,18,36,.10);
+    --shadow-lg: 0 24px 60px rgba(8,18,36,.16);
+    --maxw: 1140px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+  body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 { line-height: 1.12; letter-spacing: -0.02em; margin: 0; }
+  p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ===== NAV ===== */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(246,248,252,.82);
+    backdrop-filter: saturate(160%) blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .25s, box-shadow .25s, background .25s;
+  }
+  header.nav.scrolled {
+    border-bottom-color: var(--line);
+    box-shadow: 0 6px 24px rgba(8,18,36,.05);
+  }
+  .nav-inner {
+    height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+  .brand { display: flex; align-items: center; gap: 11px; font-weight: 800; letter-spacing: -0.02em; font-size: 17px; }
+  .brand-mark {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: grid; place-items: center; color: #fff; font-size: 16px;
+    background: linear-gradient(150deg, var(--blue-500), #1a4fd6);
+    box-shadow: 0 6px 16px rgba(43,107,255,.34);
+  }
+  .brand span.thin { color: var(--ink-soft); font-weight: 600; }
+  .nav-links { display: flex; align-items: center; gap: 4px; }
+  .nav-links a {
+    font-size: 14.5px; font-weight: 600; color: var(--ink-soft);
+    padding: 9px 14px; border-radius: 9px; transition: color .18s, background .18s;
+  }
+  .nav-links a:hover { color: var(--ink); background: rgba(43,107,255,.08); }
+  .nav-cta {
+    font-size: 14.5px; font-weight: 700; color: #fff !important;
+    background: var(--blue-500); padding: 10px 18px !important; border-radius: 10px !important;
+    box-shadow: 0 6px 16px rgba(43,107,255,.3); transition: transform .15s, box-shadow .2s !important;
+  }
+  .nav-cta:hover { background: var(--blue-500) !important; transform: translateY(-1px); box-shadow: 0 10px 22px rgba(43,107,255,.4); }
+  .nav-toggle { display: none; }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(900px 500px at 78% -10%, rgba(43,107,255,.35), transparent 60%),
+      radial-gradient(700px 500px at 0% 110%, rgba(43,107,255,.16), transparent 55%),
+      linear-gradient(165deg, var(--navy-800) 0%, var(--navy-900) 100%);
+    color: #fff;
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: 54px 54px;
+    -webkit-mask-image: radial-gradient(750px 450px at 75% 0%, #000, transparent 75%);
+    mask-image: radial-gradient(750px 450px at 75% 0%, #000, transparent 75%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center;
+    padding: 92px 0 104px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(79,134,255,.16); border: 1px solid rgba(120,160,255,.28);
+    color: #cfe0ff; font-weight: 600; font-size: 13.5px; letter-spacing: .01em;
+    padding: 7px 14px 7px 11px; border-radius: 999px;
+  }
+  .eyebrow i { color: #7fffb8; }
+  .hero h1 {
+    font-size: clamp(38px, 5.4vw, 60px); font-weight: 800; margin: 22px 0 0;
+    letter-spacing: -0.03em;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(100deg, #7fb0ff, #c9dcff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.sub {
+    font-size: clamp(17px, 2vw, 20px); color: #b7c4de; max-width: 540px;
+    margin: 22px 0 0; font-weight: 500;
+  }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
+    font-family: inherit; font-weight: 700; font-size: 16px; border: 0;
+    padding: 15px 26px; border-radius: 13px; transition: transform .15s, box-shadow .2s, background .2s;
+  }
+  .btn-primary { background: var(--blue-500); color: #fff; box-shadow: 0 12px 28px rgba(43,107,255,.42); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 38px rgba(43,107,255,.52); }
+  .btn-ghost { background: rgba(255,255,255,.07); color: #fff; border: 1px solid rgba(255,255,255,.18); }
+  .btn-ghost:hover { background: rgba(255,255,255,.13); transform: translateY(-2px); }
+  .hero-trust { display: flex; gap: 26px; margin-top: 38px; flex-wrap: wrap; }
+  .hero-trust div { display: flex; flex-direction: column; }
+  .hero-trust b { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
+  .hero-trust span { font-size: 13px; color: #93a3c4; font-weight: 500; }
+
+  /* Hero shield card */
+  .hero-visual { position: relative; display: grid; place-items: center; }
+  .shield-card {
+    position: relative; width: 100%; max-width: 360px;
+    background: linear-gradient(165deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
+    border: 1px solid rgba(255,255,255,.16); border-radius: 26px;
+    padding: 34px 30px; backdrop-filter: blur(6px);
+    box-shadow: 0 30px 70px rgba(0,0,0,.4);
+  }
+  .shield-emblem {
+    width: 86px; height: 86px; border-radius: 22px; margin: 0 auto 22px;
+    display: grid; place-items: center; font-size: 38px; color: #fff;
+    background: linear-gradient(155deg, var(--blue-400), #1a4fd6);
+    box-shadow: 0 16px 34px rgba(43,107,255,.5);
+  }
+  .shield-card h3 { text-align: center; font-size: 19px; color: #fff; }
+  .shield-card .cap { text-align: center; color: #9fb0d0; font-size: 13.5px; margin-top: 6px; }
+  .shield-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid rgba(255,255,255,.1); margin-top: 18px; }
+  .shield-row:first-of-type { margin-top: 22px; }
+  .shield-ic { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; font-size: 14px; flex: 0 0 auto; }
+  .shield-ic.g { background: rgba(21,160,90,.2); color: #6ee7a8; }
+  .shield-ic.b { background: rgba(43,107,255,.2); color: #8fb4ff; }
+  .shield-row span { font-size: 14px; color: #d3deef; font-weight: 500; }
+  .shield-row .chk { margin-left: auto; color: #6ee7a8; font-size: 15px; }
+  .float-badge {
+    position: absolute; right: -16px; top: 26px;
+    background: #fff; color: var(--ink); border-radius: 14px; padding: 11px 15px;
+    display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow-lg); font-size: 13px; font-weight: 700;
+  }
+  .float-badge i { color: var(--safe); font-size: 17px; }
+
+  /* ===== SECTION SHELL ===== */
+  section.block { padding: 84px 0; }
+  .sec-head { max-width: 680px; margin: 0 auto 56px; text-align: center; }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px;
+    text-transform: uppercase; letter-spacing: .12em; color: var(--blue-500);
+    background: var(--blue-100); padding: 7px 14px; border-radius: 999px;
+  }
+  .sec-head h2 { font-size: clamp(28px, 3.6vw, 40px); font-weight: 800; margin: 18px 0 0; }
+  .sec-head p { color: var(--ink-soft); font-size: 17.5px; margin-top: 14px; font-weight: 500; }
+
+  /* Topic card layout */
+  .topic {
+    display: grid; grid-template-columns: 64px 1fr; gap: 26px;
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 40px; box-shadow: var(--shadow-sm); margin-bottom: 30px;
+    transition: box-shadow .25s, transform .25s, border-color .25s;
+  }
+  .topic:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: #d4ddec; }
+  .topic-ic {
+    width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center;
+    font-size: 26px; color: #fff;
+    background: linear-gradient(155deg, var(--blue-500), #1a4fd6);
+    box-shadow: 0 12px 26px rgba(43,107,255,.32);
+  }
+  .topic-ic.pw  { background: linear-gradient(155deg, #5a7bff, #2b3fd6); box-shadow: 0 12px 26px rgba(58,77,214,.32); }
+  .topic-ic.ph  { background: linear-gradient(155deg, #ff7a59, #e23b3b); box-shadow: 0 12px 26px rgba(226,59,59,.30); }
+  .topic-ic.wa  { background: linear-gradient(155deg, #2ed47a, #15a05a); box-shadow: 0 12px 26px rgba(21,160,90,.32); }
+  .topic-ic.fn  { background: linear-gradient(155deg, #8b7bff, #5a3fd6); box-shadow: 0 12px 26px rgba(90,63,214,.30); }
+  .topic-body h3 { font-size: 23px; font-weight: 800; }
+  .topic-num { font-size: 13px; font-weight: 700; color: var(--blue-500); letter-spacing: .04em; }
+  .topic-body > p { color: var(--ink-soft); margin-top: 10px; font-size: 16px; max-width: 620px; }
+
+  /* good vs bad split */
+  .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .vs-card { border-radius: var(--radius-sm); padding: 18px 20px; border: 1px solid; }
+  .vs-card.bad { background: var(--danger-bg); border-color: var(--danger-line); }
+  .vs-card.good { background: var(--safe-bg); border-color: var(--safe-line); }
+  .vs-card .vs-label { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+  .vs-card.bad .vs-label { color: var(--danger); }
+  .vs-card.good .vs-label { color: var(--safe); }
+  .vs-card .ex { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .vs-chip { font-family: 'Plus Jakarta Sans', monospace; font-weight: 700; font-size: 14.5px; background: #fff; border: 1px dashed; border-radius: 8px; padding: 7px 12px; }
+  .vs-card.bad .vs-chip { border-color: var(--danger-line); color: #b32424; }
+  .vs-card.good .vs-chip { border-color: var(--safe-line); color: #0c7a42; }
+
+  /* tip list */
+  .tips { display: grid; gap: 12px; margin-top: 22px; }
+  .tip { display: flex; gap: 13px; align-items: flex-start; background: #fff; }
+  .tip i { flex: 0 0 auto; margin-top: 3px; width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; font-size: 12px; }
+  .tip.do i { background: var(--safe-bg); color: var(--safe); }
+  .tip.dont i { background: var(--danger-bg); color: var(--danger); }
+  .tip span { font-size: 15.5px; color: var(--ink); font-weight: 500; }
+  .tip span b { font-weight: 800; }
+
+  /* alert / scam item rows */
+  .scam-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 24px; }
+  .scam {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 20px;
+  }
+  .scam .scam-ic { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; font-size: 16px; margin-bottom: 14px; background: var(--danger-bg); color: var(--danger); }
+  .scam h4 { font-size: 16px; font-weight: 800; margin: 0; }
+  .scam p { font-size: 14px; color: var(--ink-soft); margin-top: 7px; }
+  .golden {
+    margin-top: 22px; display: flex; align-items: center; gap: 14px;
+    background: var(--safe-bg); border: 1px solid var(--safe-line); border-radius: var(--radius-sm);
+    padding: 16px 20px; color: #0c7a42; font-weight: 600; font-size: 15.5px;
+  }
+  .golden i { font-size: 20px; flex: 0 0 auto; }
+
+  /* fake news source chips */
+  .sources { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .source-chip {
+    display: inline-flex; align-items: center; gap: 9px; background: #fff;
+    border: 1px solid var(--line); border-radius: 999px; padding: 9px 16px 9px 13px;
+    font-weight: 700; font-size: 14px; box-shadow: var(--shadow-sm);
+  }
+  .source-chip i { color: var(--blue-500); }
+
+  /* ===== CHECKLIST ===== */
+  .checklist-sec {
+    background:
+      radial-gradient(700px 400px at 90% 0%, rgba(43,107,255,.3), transparent 60%),
+      linear-gradient(165deg, var(--navy-800), var(--navy-900));
+    color: #fff; position: relative; overflow: hidden;
+  }
+  .checklist-sec .kicker { background: rgba(79,134,255,.18); color: #bcd2ff; }
+  .checklist-sec .sec-head h2 { color: #fff; }
+  .checklist-sec .sec-head p { color: #aab8d6; }
+  .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 880px; margin: 0 auto; }
+  .check-item {
+    display: flex; align-items: center; gap: 15px; cursor: pointer;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
+    border-radius: 14px; padding: 18px 20px; transition: background .2s, border-color .2s, transform .15s;
+  }
+  .check-item:hover { background: rgba(255,255,255,.09); transform: translateY(-2px); }
+  .check-box {
+    width: 28px; height: 28px; border-radius: 9px; flex: 0 0 auto;
+    border: 2px solid rgba(255,255,255,.3); display: grid; place-items: center;
+    color: transparent; font-size: 13px; transition: all .2s;
+  }
+  .check-item.on .check-box { background: var(--safe); border-color: var(--safe); color: #fff; }
+  .check-item.on { background: rgba(21,160,90,.14); border-color: rgba(46,212,122,.4); }
+  .check-item span { font-size: 15.5px; font-weight: 600; color: #e3eaf6; }
+  .check-item.on span { color: #fff; }
+  .check-progress { max-width: 880px; margin: 0 auto 26px; }
+  .check-bar { height: 8px; border-radius: 99px; background: rgba(255,255,255,.12); overflow: hidden; }
+  .check-bar i { display: block; height: 100%; width: 0%; border-radius: 99px; background: linear-gradient(90deg, #2ed47a, #15a05a); transition: width .4s cubic-bezier(.4,0,.2,1); }
+  .check-count { text-align: center; margin-top: 12px; font-size: 14.5px; color: #aab8d6; font-weight: 600; }
+  .check-count b { color: #6ee7a8; }
+
+  /* ===== FOOTER ===== */
+  footer.site {
+    background: var(--navy-900); color: #8fa0c0; padding: 50px 0; text-align: center;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+  footer.site .brand { justify-content: center; color: #fff; margin-bottom: 18px; }
+  footer.site .brand .thin { color: #8fa0c0; }
+  footer.site p { font-size: 14.5px; max-width: 560px; margin: 0 auto; line-height: 1.7; }
+  footer.site .meta { margin-top: 14px; font-size: 13px; color: #5f6f8e; }
+
+  /* ===== reveal animation ===== */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+  /* ===== responsive ===== */
+  @media (max-width: 920px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; padding: 70px 0 80px; }
+    .hero-visual { order: -1; }
+    .shield-card { max-width: 340px; margin: 0 auto; }
+    .nav-links { display: none; }
+    .nav-toggle { display: inline-grid; }
+    .scam-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 680px) {
+    .wrap { padding: 0 18px; }
+    section.block { padding: 60px 0; }
+    .topic { grid-template-columns: 1fr; gap: 18px; padding: 26px; }
+    .topic-ic { width: 56px; height: 56px; font-size: 22px; }
+    .vs { grid-template-columns: 1fr; }
+    .check-grid { grid-template-columns: 1fr; }
+    .hero-trust { gap: 18px; }
+    .float-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark"><i class="fa-solid fa-shield-halved"></i></span>
+      Guia&nbsp;<span class="thin">de Segurança Digital</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#senhas">Senhas</a>
+      <a href="#phishing">Phishing</a>
+      <a href="#whatsapp">WhatsApp</a>
+      <a href="#fakenews">Fake News</a>
+      <a href="#checklist" class="nav-cta">Ver as dicas</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow"><i class="fa-solid fa-circle-check"></i> Material educativo · Linguagem simples</span>
+      <h1>Guia de Segurança Digital <span class="grad">para o Dia a Dia</span></h1>
+      <p class="sub">Proteja-se dos golpes mais comuns da internet com dicas simples e práticas — sem termos técnicos complicados.</p>
+      <div class="hero-actions">
+        <a href="#senhas" class="btn btn-primary">Ver as dicas <i class="fa-solid fa-arrow-down"></i></a>
+        <a href="#checklist" class="btn btn-ghost">Checklist rápido <i class="fa-solid fa-list-check"></i></a>
+      </div>
+      <div class="hero-trust">
+        <div><b>4</b><span>temas essenciais</span></div>
+        <div><b>+15</b><span>dicas práticas</span></div>
+        <div><b>100%</b><span>gratuito e livre</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="shield-card">
+        <div class="shield-emblem"><i class="fa-solid fa-lock"></i></div>
+        <h3>Sua segurança em camadas</h3>
+        <p class="cap">Pequenos hábitos que fazem grande diferença</p>
+        <div class="shield-row">
+          <div class="shield-ic b"><i class="fa-solid fa-key"></i></div>
+          <span>Senhas fortes e únicas</span>
+          <i class="fa-solid fa-circle-check chk"></i>
+        </div>
+        <div class="shield-row">
+          <div class="shield-ic g"><i class="fa-solid fa-fish-fins"></i></div>
+          <span>Reconhecer phishing</span>
+          <i class="fa-solid fa-circle-check chk"></i>
+        </div>
+        <div class="shield-row">
+          <div class="shield-ic g"><i class="fa-brands fa-whatsapp"></i></div>
+          <span>Evitar golpes no WhatsApp</span>
+          <i class="fa-solid fa-circle-check chk"></i>
+        </div>
+        <div class="shield-row">
+          <div class="shield-ic b"><i class="fa-solid fa-magnifying-glass"></i></div>
+          <span>Identificar fake news</span>
+          <i class="fa-solid fa-circle-check chk"></i>
+        </div>
+      </div>
+      <div class="float-badge"><i class="fa-solid fa-shield-halved"></i> Você no controle</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SEÇÃO 1 — SENHAS ===================== -->
+<section class="block" id="senhas">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker"><i class="fa-solid fa-lock"></i> Seção 1</span>
+      <h2>Senhas Seguras</h2>
+      <p>A senha é a primeira porta de entrada da sua vida digital. Uma boa senha é difícil de adivinhar e fácil de você lembrar.</p>
+    </div>
+
+    <div class="topic reveal">
+      <div class="topic-ic pw"><i class="fa-solid fa-key"></i></div>
+      <div class="topic-body">
+        <span class="topic-num">PASSO 01</span>
+        <h3>Senha fraca x senha forte</h3>
+        <p>Senhas óbvias são quebradas por programas em segundos. O segredo de uma senha forte é o tamanho e a mistura de caracteres.</p>
+
+        <div class="vs">
+          <div class="vs-card bad">
+            <div class="vs-label"><i class="fa-solid fa-circle-xmark"></i> Evite (senha fraca)</div>
+            <div class="ex">
+              <span class="vs-chip">123456</span>
+              <span class="vs-chip">seunome2024</span>
+              <span class="vs-chip">senha · qwerty</span>
+            </div>
+          </div>
+          <div class="vs-card good">
+            <div class="vs-label"><i class="fa-solid fa-circle-check"></i> Prefira (senha forte)</div>
+            <div class="ex">
+              <span class="vs-chip">Ch@ve-Azul_47!</span>
+              <span class="vs-chip">Pão&Café#Manhã9</span>
+              <span class="vs-chip">12+ caracteres</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tips">
+          <div class="tip do"><i class="fa-solid fa-check"></i><span>Combine <b>letras maiúsculas, minúsculas, números e símbolos</b> (@, #, !, &).</span></div>
+          <div class="tip do"><i class="fa-solid fa-check"></i><span>Use uma <b>senha diferente para cada site</b> — se um vazar, os outros ficam protegidos.</span></div>
+          <div class="tip do"><i class="fa-solid fa-check"></i><span>Considere um <b>gerenciador de senhas</b> (como Bitwarden ou o do próprio navegador) para guardar tudo com segurança.</span></div>
+          <div class="tip dont"><i class="fa-solid fa-xmark"></i><span>Nunca use seu <b>nome, data de nascimento ou "123456"</b> — são os primeiros que os golpistas testam.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SEÇÃO 2 — PHISHING ===================== -->
+<section class="block" id="phishing" style="background:#fff; border-block:1px solid var(--line);">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker"><i class="fa-solid fa-fish-fins"></i> Seção 2</span>
+      <h2>Phishing: a isca digital</h2>
+      <p>Phishing é quando golpistas se passam por empresas ou pessoas de confiança para "pescar" seus dados e senhas.</p>
+    </div>
+
+    <div class="topic reveal" style="background:var(--paper);">
+      <div class="topic-ic ph"><i class="fa-solid fa-fish-fins"></i></div>
+      <div class="topic-body">
+        <span class="topic-num">PASSO 02</span>
+        <h3>Como identificar e-mails e links falsos</h3>
+        <p>A mensagem parece real, com logo e tudo — mas pede que você clique em um link e digite seus dados com urgência. Esse é o sinal clássico de phishing.</p>
+
+        <div class="tips">
+          <div class="tip do"><i class="fa-solid fa-check"></i><span><b>Passe o mouse sobre o link</b> antes de clicar — o endereço real aparece no canto da tela. Se for estranho, não clique.</span></div>
+          <div class="tip dont"><i class="fa-solid fa-xmark"></i><span><b>Desconfie de urgência excessiva</b>: "sua conta será bloqueada em 24h!" é uma tática para você agir sem pensar.</span></div>
+          <div class="tip dont"><i class="fa-solid fa-xmark"></i><span><b>Bancos nunca pedem senha por e-mail</b>, SMS ou telefone. Se pediram, é golpe.</span></div>
+          <div class="tip do"><i class="fa-solid fa-check"></i><span>Confira o <b>remetente com calma</b>: erros de português e endereços esquisitos (<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4220232c212d0231272537302d6f2b2c242d6c3a3b38">[email&#160;protected]</a>) entregam a fraude.</span></div>
+          <div class="tip do"><i class="fa-solid fa-check"></i><span>Na dúvida, <b>acesse o site digitando o endereço você mesmo</b> — nunca pelo link recebido.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SEÇÃO 3 — WHATSAPP ===================== -->
+<section class="block" id="whatsapp">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker"><i class="fa-brands fa-whatsapp"></i> Seção 3</span>
+      <h2>Golpes no WhatsApp</h2>
+      <p>O aplicativo mais usado no Brasil também é o favorito dos golpistas. Conheça os três golpes mais comuns.</p>
+    </div>
+
+    <div class="topic reveal">
+      <div class="topic-ic wa"><i class="fa-brands fa-whatsapp"></i></div>
+      <div class="topic-body">
+        <span class="topic-num">PASSO 03</span>
+        <h3>Os golpes mais comuns — e como se proteger</h3>
+        <p>Quase todos seguem a mesma fórmula: criar urgência e pedir dinheiro ou um código rápido. Saber reconhecer já é metade da proteção.</p>
+
+        <div class="scam-grid">
+          <div class="scam">
+            <div class="scam-ic"><i class="fa-solid fa-user-large-slash"></i></div>
+            <h4>Golpe do familiar</h4>
+            <p>Um número desconhecido diz ser seu filho ou parente "com o telefone novo" e pede uma transferência urgente.</p>
+          </div>
+          <div class="scam">
+            <div class="scam-ic"><i class="fa-solid fa-clone"></i></div>
+            <h4>Clonagem de número</h4>
+            <p>Pedem o código de 6 dígitos que chegou por SMS. Ao informar, você entrega sua conta para o golpista.</p>
+          </div>
+          <div class="scam">
+            <div class="scam-ic"><i class="fa-solid fa-headset"></i></div>
+            <h4>Falso suporte técnico</h4>
+            <p>Alguém finge ser do "suporte" do banco ou app e pede dados, senhas ou acesso remoto ao seu aparelho.</p>
+          </div>
+        </div>
+
+        <div class="golden">
+          <i class="fa-solid fa-phone-volume"></i>
+          <span><b>Dica de ouro:</b> sempre confirme por ligação de voz antes de transferir dinheiro — e nunca compartilhe o código de 6 dígitos com ninguém.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SEÇÃO 4 — FAKE NEWS ===================== -->
+<section class="block" id="fakenews" style="background:#fff; border-block:1px solid var(--line);">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker"><i class="fa-solid fa-magnifying-glass"></i> Seção 4</span>
+      <h2>Fake News</h2>
+      <p>Notícias falsas se espalham rápido porque mexem com a emoção. Verificar antes de compartilhar é um ato de cidadania.</p>
+    </div>
+
+    <div class="topic reveal" style="background:var(--paper);">
+      <div class="topic-ic fn"><i class="fa-solid fa-newspaper"></i></div>
+      <div class="topic-body">
+        <span class="topic-num">PASSO 04</span>
+        <h3>Como identificar notícias falsas</h3>
+        <p>Antes de repassar aquela mensagem que "todo mundo precisa saber", desconfie e investigue a origem.</p>
+
+        <div class="tips">
+          <div class="tip do"><i class="fa-solid fa-check"></i><span><b>Verifique a fonte</b>: a notícia está em veículos conhecidos e confiáveis, ou só em correntes de mensagem?</span></div>
+          <div class="tip dont"><i class="fa-solid fa-xmark"></i><span><b>Títulos sensacionalistas</b> em CAIXA ALTA e com muitos pontos de exclamação são sinal de alerta.</span></div>
+          <div class="tip do"><i class="fa-solid fa-check"></i><span><b>Cheque a data</b>: notícias antigas são reaproveitadas fora de contexto para enganar.</span></div>
+          <div class="tip do"><i class="fa-solid fa-check"></i><span><b>Sempre verifique antes de compartilhar</b> — se for falso, você ajuda a parar a corrente.</span></div>
+        </div>
+
+        <p style="margin-top:24px; font-weight:700; color:var(--ink);">Ferramentas de checagem que você pode usar:</p>
+        <div class="sources">
+          <span class="source-chip"><i class="fa-solid fa-circle-check"></i> Agência Lupa</span>
+          <span class="source-chip"><i class="fa-solid fa-circle-check"></i> Aos Fatos</span>
+          <span class="source-chip"><i class="fa-solid fa-circle-check"></i> Comprova</span>
+          <span class="source-chip"><i class="fa-brands fa-google"></i> Google Fact Check</span>
+          <span class="source-chip"><i class="fa-solid fa-circle-check"></i> Boatos.org</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SEÇÃO 5 — CHECKLIST ===================== -->
+<section class="block checklist-sec" id="checklist">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker"><i class="fa-solid fa-list-check"></i> Seção 5</span>
+      <h2>Checklist rápido de segurança</h2>
+      <p>Marque o que você já faz e veja onde pode melhorar. Quanto mais itens marcados, mais protegido você está.</p>
+    </div>
+
+    <div class="check-progress reveal">
+      <div class="check-bar"><i id="checkFill"></i></div>
+      <div class="check-count"><b id="checkNum">0</b> de 8 hábitos seguros ativados</div>
+    </div>
+
+    <div class="check-grid reveal" id="checkGrid">
+      <div class="check-item"><div class="check-box"><i class="fa-solid fa-check"></i></div><span>Uso senhas diferentes em cada site</span></div>
+      <div class="check-item"><div class="check-box"><i class="fa-solid fa-check"></i></div><span>Tenho autenticação em dois fatores ativada</span></div>
+      <div class="check-item"><div class="check-box"><i class="fa-solid fa-check"></i></div><span>Nunca clico em links suspeitos</span></div>
+      <div class="check-item"><div class="check-box"><i class="fa-solid fa-check"></i></div><span>Confiro o remetente antes de responder e-mails</span></div>
+      <div class="check-item"><div class="check-box"><i class="fa-solid fa-check"></i></div><span>Confirmo por ligação antes de transferir dinheiro</span></div>
+      <div class="check-item"><div class="check-box"><i class="fa-solid fa-check"></i></div><span>Nunca compartilho códigos recebidos por SMS</span></div>
+      <div class="check-item"><div class="check-box"><i class="fa-solid fa-check"></i></div><span>Verifico a fonte antes de compartilhar notícias</span></div>
+      <div class="check-item"><div class="check-box"><i class="fa-solid fa-check"></i></div><span>Mantenho aplicativos e celular sempre atualizados</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site">
+  <div class="wrap">
+    <a href="#top" class="brand">
+      <span class="brand-mark"><i class="fa-solid fa-shield-halved"></i></span>
+      Guia&nbsp;<span class="thin">de Segurança Digital</span>
+    </a>
+    <p>Material educativo desenvolvido como projeto acadêmico — Ciência da Computação · Sistemas de Informação e Sociedade · 2026</p>
+    <p class="meta">Sem fins comerciais · Conteúdo livre para compartilhar e usar em sala de aula</p>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Nav shadow on scroll
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Checklist (decorative, toggle + progress)
+  const grid = document.getElementById('checkGrid');
+  const fill = document.getElementById('checkFill');
+  const num = document.getElementById('checkNum');
+  const items = [...grid.querySelectorAll('.check-item')];
+  const update = () => {
+    const on = items.filter(i => i.classList.contains('on')).length;
+    fill.style.width = (on / items.length * 100) + '%';
+    num.textContent = on;
+  };
+  items.forEach(item => {
+    item.addEventListener('click', () => { item.classList.toggle('on'); update(); });
+  });
+</script>
+</body>
+</html>
